@@ -1,5 +1,5 @@
 {
-  "name": "tdog-gusky-hg",
+  "name": "tdog-husky-hg",
   "version": "0.0.1",
   "description": "Prevents bad commit or push (git/hg hooks, pre-commit/precommit, pre-push/prepush, post-merge/postmerge and all that stuff...)",
   "engines": {
