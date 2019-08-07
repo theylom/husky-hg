@@ -1,6 +1,6 @@
 {
-  "name": "husky-hg",
-  "version": "0.15.4",
+  "name": "tdog-gusky-hg",
+  "version": "0.0.1",
   "description": "Prevents bad commit or push (git/hg hooks, pre-commit/precommit, pre-push/prepush, post-merge/postmerge and all that stuff...)",
   "engines": {
     "node": ">=4"
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/TobiasTimm/husky-hg.git"
+    "url": "git://github.com/theylom/tdog-husky-hg.git"
   },
   "keywords": [
     "git",
@@ -31,10 +31,10 @@
     "postmerge",
     "test"
   ],
-  "author": "Tobias Timm <tbs.timm@gmail.com>",
+  "author": "Theylom Bermudez <tebacr@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TobiasTimm/husky-hg/issues"
+    "url": "https://github.com/theylom/tdog-husky-hg/issues"
   },
   "homepage": "https://github.com/typicode/husky",
   "devDependencies": {
