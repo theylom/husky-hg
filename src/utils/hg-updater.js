@@ -103,7 +103,7 @@ function addHook(huskyDir, hooksdir, hookName) {
       !containsHook(huskySection, hookName) &&
       !containsHook(hooksSection, hookName)
     ) {
-      huskySection.data += `pretxncommit.validations = .hg/hooks/validations.py`;
+      huskySection.data += `pretxncommit.validations = .hg/hooks/validations.py\n`;
     }
     update(hgrcFile, hgrcData, huskySection);
   } catch (e) {
