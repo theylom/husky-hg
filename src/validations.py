@@ -55,7 +55,7 @@ def validate(fileslist):
             print "Canceling commit due to errors found. Please check and fix."
             sys.exit(1)
         else:
-            sys.exit(1)
+            sys.exit(0)
     except Exception as e:
         print  >> sys.stderr, str(e)
 if __name__ == '__main__':
