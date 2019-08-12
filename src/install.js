@@ -35,7 +35,7 @@ function createHook(huskyDir, vcs, hooksDir, hookName) {
   // In order to support projects with package.json in a different directory
   // than .hg/.git, find relative path from project directory to package.json
   const relativePath = path.join(".", path.relative(projectDir, packageDir));
-  var pythonPath = path.join(huskyDir, "src", "validations.py");
+  var pythonPath = path.join(huskyDir, "src", hookName + extension);
   const hookScript = fs.readFileSync(pythonPath).toString();
 
   // Create hooks directory if needed
@@ -111,6 +111,7 @@ function installFrom(huskyDir) {
 
     if (hooksDir) {
       createHook(huskyDir, vcs, hooksDir, "validations");
+      createHook(huskyDir, vcs, hooksDir, "precommit");
       console.log("done\n");
     } else {
       console.log("can't find .git directory, skipping Git hooks installation");
