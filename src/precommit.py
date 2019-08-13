@@ -9,11 +9,9 @@ def precommit_hook(ui, repo, **kwargs):
 
             # check if `ctx.branch()` matches ...
             if ctx._text != None and ctx._text != "":
-                print ctx._text
-                #commitMsg = input("Enter commit message to add to '%s': "%ctx.branch())
-                # update commit text
-                ctx._text = ("[#%s] " % ctx.branch()) + ctx._text
-                print ctx._text
+                if re.match(r".*\[#[A-Z]+-[0-9]+\].*", ctx._text) is None:
+                    ctx._text = ("[#%s] " % ctx.branch()) + ctx._text
+                    print "Updated commit message: " + ctx._text
 
             # call original
             return commitctx(ctx, error)

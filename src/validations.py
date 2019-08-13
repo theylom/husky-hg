@@ -19,15 +19,31 @@ class bcolors:
 def validate(fileslist):
     print fileslist
     errors = False
+    askExecuteEslint = None
     try:
         for line in fileslist:
             if line.find("shared-assets-ui-host") == -1:
-                print "reviewing %s" % line
                 filename = line.split('/')[-1]
-                filePath = os.getcwd() + '/' + line.split("M ")[-1].replace('\n', '')
+                if askExecuteEslint is None and filename.find('.js') != -1 or filename.find('.ts') != -1 or filename.find('.json') != -1:
+                    askExecuteEslint = raw_input("Do you want to execute prettier and eslint over .js, .ts and .json files? (y/n): ")
+                if line.startswith('M'):
+                    filePath = os.getcwd() + '/' + line.split("M ")[-1].replace('\n', '')
+                if line.startswith('A'):
+                    filePath = os.getcwd() + '/' + line.split("A ")[-1].replace('\n', '')
+                if line.startswith('D'):
+                    filePath = os.getcwd() + '/' + line.split("D ")[-1].replace('\n', '')
+                if line.startswith('?'):
+                    filePath = os.getcwd() + '/' + line.split("? ")[-1].replace('\n', '')
+                if askExecuteEslint is not None and askExecuteEslint == 'y' and (filename.find('.js') != -1 or filename.find('.ts') != -1 or filename.find('.json') != -1):
+                    try:
+                        subprocess.check_call('cd '+os.getcwd()+(' && yarn prettier %s && yarn eslint %s' % (filePath, filePath)), shell=True) == 0
+                    except (OSError, subprocess.CalledProcessError) as e:
+                        print  >> sys.stderr, str(e)
+                        errors = True
+                
                 if line.startswith('M') or line.startswith('A'):
                     if line.find("spec.js") != -1:
-                        print bcolors.WARNING + ('Test file added/modified %s Running tests within that file.' % filename) + bcolors.ENDC
+                        print bcolors.WARNING + ('Test file added/modified %s Running tests within that file.' % line) + bcolors.ENDC
                         f=open(filePath, "r")
                         if f.mode == 'r':
                             contents =f.read()
@@ -49,7 +65,7 @@ def validate(fileslist):
                         print bcolors.WARNING + ('Stories file added/modified %s make sure you ran "yarn jest storybook -u" to create/update the snapshot.' % filename) + bcolors.ENDC
                 if line.startswith('?'):
                     if line.find("stories.storyshot") != -1:
-                        print bcolors.WARNING + ('Storyshot file created but was not added in the commit: %s.' % filename) + bcolors.ENDC
+                        print bcolors.WARNING + ('Storyshot file created but was not added in the commit: %s.' % line) + bcolors.ENDC
 
         if errors:
             print "Canceling commit due to errors found. Please check and fix."
@@ -58,5 +74,6 @@ def validate(fileslist):
             sys.exit(0)
     except Exception as e:
         print  >> sys.stderr, str(e)
+        sys.exit(1)
 if __name__ == '__main__':
     validate(os.popen('hg status'))
