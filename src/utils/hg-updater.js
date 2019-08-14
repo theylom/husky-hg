@@ -107,7 +107,7 @@ function addHook(huskyDir, hooksdir, hookName) {
         huskySection.data += `pretxncommit.validations = .hg/hooks/validations.py\n`;
       }
       if (hookName == "precommit") {
-        huskySection.data += `python:.hg/hooks/precommit.py:precommit_hook\n`;
+        huskySection.data += `precommit.msg = python:.hg/hooks/precommit.py:precommit_hook\n`;
       }
     }
     update(hgrcFile, hgrcData, huskySection);

@@ -111,7 +111,7 @@ function installFrom(huskyDir) {
 
     if (hooksDir) {
       createHook(huskyDir, vcs, hooksDir, "validations");
-      createHook(huskyDir, vcs, hooksDir, "precommit");
+      //createHook(huskyDir, vcs, hooksDir, "precommit");
       console.log("done\n");
     } else {
       console.log("can't find .git directory, skipping Git hooks installation");
